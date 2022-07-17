@@ -2,8 +2,10 @@
 const outputBar = document.querySelector('.output-bar');
 const numBtns = document.querySelectorAll('.num-btn');
 const opBtns = document.querySelectorAll('.operator');
-//Create an array for the numbers and operators entered, and when joined will make an equation
-const inputArray = [];
+const enterBtn = document.querySelector('.enter-btn');
+//Create an array for the numbers and operators entered, and one for the whole input
+let inputArray = [];
+let tempInput = [];
 //Create the add function that takes an array
 function add(arr){
     return arr.reduce((sum, item) =>{
@@ -29,27 +31,41 @@ function divide(arr){
     });
 };
 //Every time a button is pressed, send the cooresponding value to the input array and display it to the output box
+let outputLength = 1;
 numBtns.forEach(button =>{
     button.addEventListener('click', (e) =>{
-        inputArray.push(e.target.getAttribute('id'));
-        outputBar.textContent += e.target.getAttribute('id');
+        if(outputLength <= 12){
+            tempInput.push(e.target.getAttribute('id'));
+            outputBar.textContent += e.target.getAttribute('id');
+            outputLength++;
+        }
     })
 })
 opBtns.forEach(button =>{
     button.addEventListener('click', (e) =>{
         switch(e.target.getAttribute('id')){
-            case 'plus': outputBar.textContent += '+';
+            case 'plus': outputBar.textContent = '';
+            inputArray.push(tempInput);
+            outputLength = 0;
             break;
-            case 'minus': outputBar.textContent += '-';
+            case 'minus': outputBar.textContent = '';
+            inputArray.push(tempInput);
+            outputLength = 0;
             break;
-            case 'times': outputBar.textContent += 'x';
+            case 'times': outputBar.textContent = '';
+            inputArray.push(tempInput);
+            outputLength = 0;
             break;
-            case 'divide': outputBar.textContent += '÷';
+            case 'divide': outputBar.textContent = '';
+            inputArray.push(tempInput);
+            outputLength = 0;
             break;
         }
     })
 })
+
 //Every time the enter button is pressed, call the operate function and pass the input array
+
 
 //Declare the operate function that takes the input array
 
