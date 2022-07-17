@@ -91,10 +91,6 @@ button{
     font-size: 2em;
 }
 
-.flash{
-    background-color: white;
-}
-
 .buttons{
     display: flex;
     justify-content: center;

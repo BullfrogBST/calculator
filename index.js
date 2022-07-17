@@ -76,7 +76,6 @@ opBtns.forEach(button =>{
     })
 })
 document.addEventListener('keydown', (e) =>{
-    console.log(inputArray)
     switch(e.key){
         case '+': outputBar.textContent = '';
         inputArray.push(tempInput.join(''), '+');
@@ -97,10 +96,20 @@ document.addEventListener('keydown', (e) =>{
     }
 })
 
-//Every time the enter button is pressed, or when enter is pressed, call the operate function and pass the input array
+//Every time the enter button is pressed, or when enter is pressed, call the operate function
+enterBtn.addEventListener('click', () =>{
+    operate();
+})
 
+document.addEventListener('keydown', (e) =>{
+    if(e.key = 'enter'){
+        operate();
+    }
+})
 //Declare the operate function that takes the input array
-
+function operate(){
+    console.log('Hooty!!')
+}
 //For each item in the input array, if the next item is an operator, then add the previous number to an array
 
 //Call the function that the operator matches
