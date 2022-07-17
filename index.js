@@ -99,7 +99,6 @@ document.addEventListener('keydown', (e) =>{
 
 //Every time the enter button is pressed, or when enter is pressed, call the operate function and pass the input array
 
-
 //Declare the operate function that takes the input array
 
 //For each item in the input array, if the next item is an operator, then add the previous number to an array

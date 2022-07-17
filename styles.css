@@ -54,6 +54,7 @@ button{
     font-size: 3rem;
     font-weight: bolder;
     margin-top: 1rem;
+    text-align: center;
 }
 
 .calculator{
@@ -65,6 +66,8 @@ button{
     border: 1px solid black;
 
     width: 35%;
+    max-width: 400px;
+    min-width: 300px;
     height: 70%;
     padding-top: 3rem;
 
@@ -78,6 +81,7 @@ button{
 
     display: flex;
     align-items: center;
+    justify-content: flex-end;
 
     border: 1px solid black;
 
@@ -85,6 +89,10 @@ button{
 
     color: var(--primary-color);
     font-size: 2em;
+}
+
+.flash{
+    background-color: white;
 }
 
 .buttons{
