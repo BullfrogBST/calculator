@@ -35,36 +35,69 @@ let outputLength = 1;
 numBtns.forEach(button =>{
     button.addEventListener('click', (e) =>{
         if(outputLength <= 12){
-            tempInput.push(e.target.getAttribute('id'));
-            outputBar.textContent += e.target.getAttribute('id');
-            outputLength++;
+            input = e.target.getAttribute('id');
+            tempInput.push(input)
+            outputBar.textContent += input;
+            outputLength++
         }
     })
 })
+document.addEventListener('keydown', (e) =>{
+    if(outputLength <= 12){
+        if(e.key >= 0 && e.key <= 9){
+            input = e.key;
+            tempInput.push(input)
+            outputBar.textContent += input;
+            outputLength++
+        }
+    }
+})
+
 opBtns.forEach(button =>{
     button.addEventListener('click', (e) =>{
         switch(e.target.getAttribute('id')){
             case 'plus': outputBar.textContent = '';
-            inputArray.push(tempInput);
+            inputArray.push(tempInput.join(''), '+');
             outputLength = 0;
             break;
             case 'minus': outputBar.textContent = '';
-            inputArray.push(tempInput);
+            inputArray.push(tempInput.join(''), '-');
             outputLength = 0;
             break;
             case 'times': outputBar.textContent = '';
-            inputArray.push(tempInput);
+            inputArray.push(tempInput.join(''), '*');
             outputLength = 0;
             break;
             case 'divide': outputBar.textContent = '';
-            inputArray.push(tempInput);
+            inputArray.push(tempInput.join(''), '/');
             outputLength = 0;
             break;
         }
     })
 })
+document.addEventListener('keydown', (e) =>{
+    console.log(inputArray)
+    switch(e.key){
+        case '+': outputBar.textContent = '';
+        inputArray.push(tempInput.join(''), '+');
+        outputLength = 0;
+        break;
+        case '-': outputBar.textContent = '';
+        inputArray.push(tempInput.join(''), '-');
+        outputLength = 0;
+        break;
+        case '*': outputBar.textContent = '';
+        inputArray.push(tempInput.join(''), '*');
+        outputLength = 0;
+        break;
+        case '/': outputBar.textContent = '';
+        inputArray.push(tempInput.join(''), '/');
+        outputLength = 0;
+        break;
+    }
+})
 
-//Every time the enter button is pressed, call the operate function and pass the input array
+//Every time the enter button is pressed, or when enter is pressed, call the operate function and pass the input array
 
 
 //Declare the operate function that takes the input array
