@@ -7,7 +7,7 @@ const enterBtn = document.querySelector('.enter-btn');
 let inputArray = [];
 let tempInput = [];
 
-let output = '';
+let outputValue = '';
 //Create the add function that takes an array
 function add(num1, num2){
     console.log('added')
@@ -32,7 +32,8 @@ numBtns.forEach(button =>{
         if(outputLength <= 12){
             input = e.target.getAttribute('id');
             tempInput.push(input)
-            outputBar.textContent += input;
+            outputValue += input;
+            output();
             outputLength++
         }
     })
@@ -42,7 +43,8 @@ document.addEventListener('keydown', (e) =>{
         if(e.key >= 0 && e.key <= 9){
             input = e.key;
             tempInput.push(input)
-            outputBar.textContent += input;
+            outputValue += input;
+            output();
             outputLength++
         }
     }
@@ -51,22 +53,26 @@ document.addEventListener('keydown', (e) =>{
 opBtns.forEach(button =>{
     button.addEventListener('click', (e) =>{
         switch(e.target.getAttribute('id')){
-            case 'plus': outputBar.textContent = '';
+            case 'plus': outputValue = '';
+            output();
             inputArray.push(tempInput.join(''), '+');
             tempInput = [];
             outputLength = 0;
             break;
-            case 'minus': outputBar.textContent = '';
+            case 'minus': outputValue = '';
+            output();
             inputArray.push(tempInput.join(''), '-');
             tempInput = [];
             outputLength = 0;
             break;
-            case 'times': outputBar.textContent = '';
+            case 'times': outputValue = '';
+            output();
             inputArray.push(tempInput.join(''), '*');
             tempInput = [];
             outputLength = 0;
             break;
-            case 'divide': outputBar.textContent = '';
+            case 'divide': outputValue = '';
+            output();
             inputArray.push(tempInput.join(''), '/');
             tempInput = [];
             outputLength = 0;
@@ -76,22 +82,26 @@ opBtns.forEach(button =>{
 })
 document.addEventListener('keydown', (e) =>{
     switch(e.key){
-        case '+': outputBar.textContent = '';
+        case '+': outputValue = '';
+        output();
         inputArray.push(tempInput.join(''), '+');
         tempInput = [];
         outputLength = 0;
         break;
-        case '-': outputBar.textContent = '';
+        case '-': outputValue = '';
+        output();
         inputArray.push(tempInput.join(''), '-');
         tempInput = [];
         outputLength = 0;
         break;
-        case '*': outputBar.textContent = '';
+        case '*': outputValue = '';
+        output();
         inputArray.push(tempInput.join(''), '*');
         tempInput = [];
         outputLength = 0;
         break;
-        case '/': outputBar.textContent = '';
+        case '/': outputValue = '';
+        output();
         inputArray.push(tempInput.join(''), '/');
         tempInput = [];
         outputLength = 0;
@@ -125,6 +135,10 @@ function operate(){
     
 }
 
-//If the clear button is pressed, clear the output box.
+//If the clear button is pressed, clear the output value, inputArray, and tempInput.
 
 //Declare the output() function, which makes the outputBar's textContent the output
+function output(){
+    console.log('output')
+    outputBar.textContent = outputValue;
+}
