@@ -128,6 +128,7 @@ document.addEventListener('keyup', (e) =>{
 
 //Declare the operate function that takes an operator and two numbers
 function operate(){
+    console.log(inputArray)
     //Make an array with the equations and sort it, and also make an array with the equations in the original order
     let equations = getEquation();
     let sortedEquations = getEquation();
@@ -186,16 +187,17 @@ function operate(){
         for(let j=0; j<equations.length; j++){
             const tempSortedEquation = {...sortedEquations[i], answer: undefined};
             const tempEquation = {...equations[j], answer: undefined};
-
-            // tempSortedEquations[i].answer = undefined;
-            // tempEquations[j].answer = undefined;
-            console.log(tempSortedEquation);
+            
             if(JSON.stringify(tempSortedEquation) == JSON.stringify(tempEquation)){
                 equations[j].answer = sortedEquations[i].answer;
                 console.log(equations)
             }
         }
     }
+    //Set the inputArray to an array with the stringified answer, and in the getEquation() function, remove empty strings from the array before getting the equations
+    inputArray = [answer.toString()]
+    console.log(inputArray)
+
     outputValue = answer;
     output();
     //Declare getEquation(), which returns an array of objects with operator, num1, and num2 as properties
@@ -203,6 +205,10 @@ function operate(){
         //Declare equations array
         const equations = [];
         for(let i=0; i<inputArray.length; i++){
+            //Remove empty strings from inputArray, to fix problems with extra empty items being added to it
+            if(inputArray[i] == ''){
+                inputArray.splice(i, 1);
+            }
             //Check if the current index in the array is an operator
             if(isOperator(inputArray[i])){
                 //Push an object with the number before the operator as "num1", the operator as "operator", and the number after the operator as "num2"
