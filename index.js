@@ -194,6 +194,8 @@ function operate(){
             }
         }
     }
+    //Round the number to the first 2 decimals if necessary
+    answer = Math.trunc(answer * 100) / 100;
     //Set the inputArray to an array with the stringified answer, and in the getEquation() function, remove empty strings from the array before getting the equations
     inputArray = [answer.toString()]
     console.log(inputArray)
