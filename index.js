@@ -3,6 +3,7 @@ const outputBar = document.querySelector('.output-bar');
 const numBtns = document.querySelectorAll('.num-btn');
 const opBtns = document.querySelectorAll('.operator');
 const enterBtn = document.querySelector('.enter-btn');
+const clearBtn = document.querySelector('.clear-btn');
 //Create an array for the numbers and operators entered, and one for the whole input
 let inputArray = [];
 let tempInput = [];
@@ -218,13 +219,23 @@ function operate(){
     }
 }
 
+//Add a clear() function, and call it when the CLEAR button is pressed
+
 
 //Declare isOperator, which just returns true if the argument is an operator
 function isOperator(item){
     return item == '+' || item == '-' || item == '*' || item == '/';
 }
 //If the clear button is pressed, clear the output value, inputArray, and tempInput.
+clearBtn.addEventListener('click', clear);
 
+function clear(){
+    outputValue = '';
+    output();
+
+    inputArray = [];
+    tempInput = [];
+}
 //Declare the output() function, which makes the outputBar's textContent the output
 function output(){
     outputBar.textContent = outputValue;
