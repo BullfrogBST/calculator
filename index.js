@@ -174,8 +174,14 @@ function operate(){
             case '*': answer = multiply(sortedEquations[i].num1, sortedEquations[i].num2);
             sortedEquations[i].answer = answer;
             break;
-            case '/': answer = divide(sortedEquations[i].num1, sortedEquations[i].num2);
-            sortedEquations[i].answer = answer;
+            case '/': if(sortedEquations[i].num2 == 0){
+                outputValue = "Can't divide by zero!";
+                output();
+                return;
+            } else{
+                answer = divide(sortedEquations[i].num1, sortedEquations[i].num2);
+                sortedEquations[i].answer = answer;
+            }
             break;
             case '+': answer = add(sortedEquations[i].num1, sortedEquations[i].num2);
             sortedEquations[i].answer = answer;
