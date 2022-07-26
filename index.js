@@ -35,7 +35,6 @@ numBtns.forEach(button =>{
             output();
             outputLength++
         }
-        console.log(tempInput)
     })
 })
 document.addEventListener('keydown', (e) =>{
@@ -125,37 +124,97 @@ document.addEventListener('keyup', (e) =>{
     operate();
     }
 })
+
 //Declare the operate function that takes an operator and two numbers
 function operate(){
-    //Make an array with the equations, using the getEquation() array
+    //Make an array with the equations and sort it, and also make an array with the equations in the original order
+    let equations = getEquation();
+    let sortedEquations = getEquation();
+    sortedEquations = sortEquations(sortedEquations);
 
-    //Use a for loop to implement order of operations, and while the input has the operand, perform the according function on it. Set the outputValue to the answer
+    function sortEquations(toSort){
+        return toSort.sort((item) =>{
+            return item.operator == '*' || item.operator == '/' ? 0 :
+            item.operator == '+' || item.operator == '-' ? 1 : 0
+        })
+    }
+    //Use a for loop to implement order of operations, and while the input has the operand, perform the according function on it. Set the outputValue to the answer and declare the equation as solved
+    let answer = null;
+    for(let i=0; i<sortedEquations.length; i++){
+        console.log(sortedEquations[i-1] || sortedEquations[i])
+        for(let j=0; j<equations.length; j++){
+            //Check if the current equation is equivelant to the current unsorted equation
+            //Make temporary arrays that will be checked and stringified later, so the original objects won't be altered
+            const tempSortedEquations = {...sortedEquations, answer: undefined};
+            const tempEquations = {...equations, answer: undefined};
+            //Check if they are identical
+            if(JSON.stringify(tempEquations[j]) == JSON.stringify(tempSortedEquations[i])){
+                //If the next question answer isn't null, then make num2 of sortedEquation[i] the answer. Do the same with the one before it
+                if(j < equations.length - 1){
+                    console.log(Object.values(equations[j+1]));
+                    console.log('a')
+                    if(equations[j+1].answer != null){
+                        console.log('Checked')
+                        equations[j].num2 = equations[j+1].answer;
+                    }
+                } 
+                if(j > 0){
+                    console.log('b');
+                    if(equations[j-1].answer != null){
+                        equations[j].num1 = equations[j-1].answer;
+                    }
+                }
+                //Sync sortedEquations with equations
+                sortedEquations[i] = equations[j];
+            }
+        }
+        switch(sortedEquations[i].operator){
+            case '*': answer = multiply(sortedEquations[i].num1, sortedEquations[i].num2);
+            sortedEquations[i].answer = answer;
+            break;
+            case '/': answer = divide(sortedEquations[i].num1, sortedEquations[i].num2);
+            sortedEquations[i].answer = answer;
+            break;
+            case '+': answer = add(sortedEquations[i].num1, sortedEquations[i].num2);
+            sortedEquations[i].answer = answer;
+            break;
+            case '-': answer = subtract(sortedEquations[i].num1, sortedEquations[i].num2)
+            sortedEquations[i].answer = answer;
+        }
+        //Sync equations and sortedEquations answers
+        for(let j=0; j<equations.length; j++){
+            const tempSortedEquation = {...sortedEquations[i], answer: undefined};
+            const tempEquation = {...equations[j], answer: undefined};
 
+            // tempSortedEquations[i].answer = undefined;
+            // tempEquations[j].answer = undefined;
+            console.log(tempSortedEquation);
+            if(JSON.stringify(tempSortedEquation) == JSON.stringify(tempEquation)){
+                equations[j].answer = sortedEquations[i].answer;
+                console.log(equations)
+            }
+        }
+    }
+    outputValue = answer;
+    output();
     //Declare getEquation(), which returns an array of objects with operator, num1, and num2 as properties
     function getEquation(){
-        console.log(inputArray)
         //Declare equations array
         const equations = [];
         for(let i=0; i<inputArray.length; i++){
             //Check if the current index in the array is an operator
             if(isOperator(inputArray[i])){
-                console.log(inputArray[i-1]);
                 //Push an object with the number before the operator as "num1", the operator as "operator", and the number after the operator as "num2"
                 equations.push({
                     num1: parseFloat(inputArray[i-1]),
                     operator: inputArray[i],
-                    num2: parseFloat(inputArray[i+1])
+                    num2: parseFloat(inputArray[i+1]),
+                    answer: null
                 })
             }
         }
         //Return the equations array
         return equations;
-    }
-
-    //Declare the finalizeEquation() function. THis function simply prevents repeated code when solving the simplified equations above
-    function finalizeEquation(answer){
-        outputValue = answer;
-        output()
     }
 }
 
